@@ -79,6 +79,22 @@ try (MyPublisher pub = new MyPublisher(props)) {
 }
 ```
 
+If you want to create a `MyPublisher` within the constructor and keep the pool alive afterward, use a regular `try-catch` block to catch the initialization exception as shown below. Avoid using `try-with-resources` within the constructor, as it closes the `MyPublisher` (i.e., the pool) when the block ends. This prevents it from persisting if you need it to live longer.
+
+```java
+    private final MyPublisher publisher;
+
+    public SomeService(ValkeyProps props) {
+        try {
+            // Here, generate a MyPublisher that internally holds a Jedis pool.
+            this.publisher = new MyPublisher(props);
+        } catch (ValkeyUnavailableException e) {
+            // If initialization fails, wrap and notify
+            throw new IllegalStateException("Failed to initialize publisher", e);
+        }
+    }
+```
+
 ### License
 This project is licensed under the MIT License. See [LICENSE](LICENSE).
 
