@@ -12,15 +12,33 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.exceptions.JedisException;
 
+/**
+ * Jedis-based implementation of {@link MessagePublisher} that publishes messages to
+ * Valkey using a {@link JedisPool}.
+ */
 public final class JedisMessagePublisher implements MessagePublisher {
     private static final Logger log = LoggerFactory.getLogger(JedisMessagePublisher.class);
     private final JedisPool pool;
 
+    /**
+     * Create a publisher backed by the given Jedis connection pool.
+     *
+     * @param pool Jedis connection pool
+     */
     public JedisMessagePublisher(JedisPool pool) {
         this.pool = pool;
     }
 
     @Override
+    /**
+     * Publish a message to a channel.
+     *
+     * @param channel channel to publish to
+     * @param message message body
+     * @return number of receivers
+     * @throws ValkeyUnavailableException if Valkey is not reachable
+     * @throws PublishException if the publish operation fails
+     */
     public long publish(String channel, String message) {
         try (Jedis j = pool.getResource()) {
             Long recv = j.publish(channel, message);
