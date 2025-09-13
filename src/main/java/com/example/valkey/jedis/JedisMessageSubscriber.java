@@ -67,7 +67,7 @@ public final class JedisMessageSubscriber implements MessageSubscriber {
                         () -> {
                             try (Jedis j = new Jedis(hap, cfg)) {
                                 log.info("subscribe start channel='{}'", channel);
-                                j.subscribe(pubsub, channel); // ブロッキング
+                                j.subscribe(pubsub, channel); // blocking
                             } catch (Exception e) {
                                 if (!stop.get()) log.error("subscribe loop error", e);
                             } finally {

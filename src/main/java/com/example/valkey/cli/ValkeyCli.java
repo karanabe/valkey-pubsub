@@ -41,7 +41,7 @@ public final class ValkeyCli implements Runnable {
 
     @Override
     public void run() {
-        // ルートで何もしない（help表示は picocli が対応）
+        // nothing to do at the root command; picocli handles help output
     }
 
     static ValkeyProps buildProps(Common c) {
