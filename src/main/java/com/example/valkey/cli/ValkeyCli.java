@@ -24,8 +24,19 @@ public final class ValkeyCli implements Runnable {
     String traceId;
 
     public static void main(String[] args) {
-        int exit = new CommandLine(new ValkeyCli()).execute(args);
+        CommandLine cmd = new CommandLine(new ValkeyCli());
+        cmd.setExecutionExceptionHandler(new ShortErrorHandler());
+        int exit = cmd.execute(args);
         System.exit(exit);
+    }
+
+    static final class ShortErrorHandler implements IExecutionExceptionHandler {
+        @Override
+        public int handleExecutionException(
+                Exception ex, CommandLine commandLine, ParseResult parseResult) {
+            ExceptionReporter.print(ex);
+            return commandLine.getCommandSpec().exitCodeOnExecutionException();
+        }
     }
 
     @Override
@@ -103,7 +114,7 @@ public final class ValkeyCli implements Runnable {
                 System.out.printf("OK receivers=%d traceId=%s%n", n, tid);
                 return 0;
             } catch (Exception e) {
-                e.printStackTrace();
+                ExceptionReporter.print(e);
                 return 1;
             } finally {
                 MDC.remove("traceId");
