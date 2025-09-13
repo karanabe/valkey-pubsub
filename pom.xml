@@ -9,6 +9,8 @@
     <jedis.version>5.1.4</jedis.version>
     <picocli.version>4.7.6</picocli.version>
     <spotless.version>2.43.0</spotless.version>
+    <slf4j.version>2.0.12</slf4j.version>
+    <logback.version>1.5.6</logback.version>
   </properties>
 
   <dependencies>
@@ -30,10 +32,12 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
     </dependency>
 
     <!-- Test -->
