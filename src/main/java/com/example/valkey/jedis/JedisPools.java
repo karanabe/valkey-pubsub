@@ -7,9 +7,35 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisClientConfig;
 import redis.clients.jedis.JedisPool;
 
+/**
+ * Factory for building configured {@link JedisPool} instances.
+ *
+ * <p>Each pool is created from the supplied {@link ValkeyProps} so that callers do not need to
+ * deal with the lower level Jedis configuration classes.
+ */
 public final class JedisPools {
     private JedisPools() {}
 
+    /**
+     * Create a {@link JedisPool} configured from the provided {@link ValkeyProps}.
+     *
+     * <p>The following options are applied:
+     *
+     * <ul>
+     *   <li>{@link ValkeyProps#host()} and {@link ValkeyProps#port()} for the node address
+     *   <li>{@link ValkeyProps#ssl()} to enable TLS
+     *   <li>{@link ValkeyProps#username()} and {@link ValkeyProps#password()} for authentication
+     *   <li>{@link ValkeyProps#database()} for the database index
+     *   <li>{@link ValkeyProps#timeoutMillis()} for connection and socket timeouts
+     *   <li>
+     *       {@link ValkeyProps#poolMaxTotal()}, {@link ValkeyProps#poolMaxIdle()}, and
+     *       {@link ValkeyProps#poolMinIdle()} for pool sizing
+     * </li>
+     * </ul>
+     *
+     * @param p valkey connection and pooling options
+     * @return a ready to use {@link JedisPool}
+     */
     public static JedisPool create(ValkeyProps p) {
         var hap = new HostAndPort(p.host(), p.port());
         JedisClientConfig cfg =
