@@ -91,12 +91,15 @@
         <version>${spotless.version}</version>
         <configuration>
           <java>
+            <importOrder>
+              <file>${project.basedir}/config/spotless/android.importorder</file>
+            </importOrder>
+            <removeUnusedImports/>
             <googleJavaFormat>
-              <version>1.22.0</version>
+              <version>1.28.0</version>
               <style>AOSP</style>
             </googleJavaFormat>
-            <importOrderFile>${project.basedir}/config/spotless/android.importorder</importOrderFile>
-            <removeUnusedImports>true</removeUnusedImports>
+            <formatAnnotations/>
           </java>
         </configuration>
         <executions>
