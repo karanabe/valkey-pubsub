@@ -11,14 +11,31 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
+/**
+ * {@link MessageSubscriber} implementation that uses a dedicated Jedis connection
+ * to subscribe to a channel and dispatch messages to a handler.
+ */
 public final class JedisMessageSubscriber implements MessageSubscriber {
     private static final Logger log = LoggerFactory.getLogger(JedisMessageSubscriber.class);
     private final ValkeyProps props;
 
+    /**
+     * Creates a subscriber configured by the given Valkey properties.
+     *
+     * @param props connection properties used to configure Jedis
+     */
     public JedisMessageSubscriber(ValkeyProps props) {
         this.props = Objects.requireNonNull(props);
     }
 
+    /**
+     * Subscribe to the given channel asynchronously. A dedicated daemon thread
+     * listens for messages and invokes the supplied handler.
+     *
+     * @param channel channel name to subscribe to
+     * @param handler callback invoked for each received message
+     * @return handle that stops the subscription when closed
+     */
     @Override
     public SubscriptionHandle subscribe(String channel, Handler handler) {
         var stop = new AtomicBoolean(false);
