@@ -1,4 +1,4 @@
-package com.example.redis.jedis;
+package com.example.valkey.jedis;
 
 import java.time.Duration;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
@@ -10,7 +10,7 @@ import redis.clients.jedis.JedisPool;
 public final class JedisPools {
   private JedisPools() {}
 
-  public static JedisPool create(RedisProps p) {
+  public static JedisPool create(ValkeyProps p) {
     var hap = new HostAndPort(p.host(), p.port());
     JedisClientConfig cfg =
         DefaultJedisClientConfig.builder()

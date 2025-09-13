@@ -1,4 +1,4 @@
-package com.example.redis.core;
+package com.example.valkey.core;
 
 public interface MessageSubscriber {
   @FunctionalInterface

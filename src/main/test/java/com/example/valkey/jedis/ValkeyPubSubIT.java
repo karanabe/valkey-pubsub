@@ -1,9 +1,9 @@
-package com.example.redis.jedis;
+package com.example.valkey.jedis;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.example.redis.core.MessagePublisher;
-import com.example.redis.core.MessageSubscriber;
+import com.example.valkey.core.MessagePublisher;
+import com.example.valkey.core.MessageSubscriber;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.*;
@@ -13,20 +13,20 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import redis.clients.jedis.JedisPool;
 
 @Testcontainers
-class RedisPubSubIT {
+class ValkeyPubSubIT {
 
   @Container
-  static GenericContainer<?> redis =
-      new GenericContainer<>("redis:7-alpine").withExposedPorts(6379);
+  static GenericContainer<?> valkey =
+      new GenericContainer<>("valkey/valkey:7-alpine").withExposedPorts(6379);
 
   @Test
   void publish_and_receive() throws Exception {
-    var props =
-        new RedisProps(redis.getHost(), redis.getFirstMappedPort(), false, null, null, 0, 5000, 8, 4, 1);
+      var props =
+          new ValkeyProps(valkey.getHost(), valkey.getFirstMappedPort(), false, null, null, 0, 5000, 8, 4, 1);
 
     try (JedisPool pool = JedisPools.create(props)) {
-      MessagePublisher pub = new JedisMessagePublisher(pool);
-      MessageSubscriber sub = new JedisMessageSubscriber(props);
+        MessagePublisher pub = new JedisMessagePublisher(pool);
+        MessageSubscriber sub = new JedisMessageSubscriber(props);
 
       String channel = "it";
       var latch = new CountDownLatch(1);

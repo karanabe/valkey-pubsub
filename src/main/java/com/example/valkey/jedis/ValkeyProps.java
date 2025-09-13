@@ -1,6 +1,6 @@
-package com.example.redis.jedis;
+package com.example.valkey.jedis;
 
-public record RedisProps(
+public record ValkeyProps(
     String host,
     int port,
     boolean ssl,
@@ -12,7 +12,7 @@ public record RedisProps(
     int poolMaxIdle,
     int poolMinIdle) {
 
-  public static RedisProps defaults() {
-    return new RedisProps("127.0.0.1", 6379, false, null, null, 0, 5000, 32, 16, 4);
+  public static ValkeyProps defaults() {
+    return new ValkeyProps("127.0.0.1", 6379, false, null, null, 0, 5000, 32, 16, 4);
   }
 }

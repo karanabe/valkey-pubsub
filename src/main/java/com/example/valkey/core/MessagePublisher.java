@@ -1,4 +1,4 @@
-package com.example.redis.core;
+package com.example.valkey.core;
 
 public interface MessagePublisher {
   /** @return publish に反応した subscriber 数 */
