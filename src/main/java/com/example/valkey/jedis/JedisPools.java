@@ -30,6 +30,6 @@ public final class JedisPools {
     pc.setTimeBetweenEvictionRuns(Duration.ofSeconds(30));
     pc.setMinEvictableIdleDuration(Duration.ofMinutes(1));
 
-    return new JedisPool(pc, hap, cfg, p.database());
+    return new JedisPool(pc, hap, cfg);
   }
 }

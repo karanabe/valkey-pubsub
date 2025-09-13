@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisDataException;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.exceptions.JedisConnectionException;
+import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.exceptions.JedisExhaustedPoolException;
 
 public final class JedisMessagePublisher implements MessagePublisher {
