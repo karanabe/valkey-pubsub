@@ -10,8 +10,8 @@ import redis.clients.jedis.JedisPool;
 /**
  * Factory for building configured {@link JedisPool} instances.
  *
- * <p>Each pool is created from the supplied {@link ValkeyProps} so that callers do not need to
- * deal with the lower level Jedis configuration classes.
+ * <p>Each pool is created from the supplied {@link ValkeyProps} so that callers do not need to deal
+ * with the lower level Jedis configuration classes.
  */
 public final class JedisPools {
     private JedisPools() {}
@@ -27,10 +27,8 @@ public final class JedisPools {
      *   <li>{@link ValkeyProps#username()} and {@link ValkeyProps#password()} for authentication
      *   <li>{@link ValkeyProps#database()} for the database index
      *   <li>{@link ValkeyProps#timeoutMillis()} for connection and socket timeouts
-     *   <li>
-     *       {@link ValkeyProps#poolMaxTotal()}, {@link ValkeyProps#poolMaxIdle()}, and
-     *       {@link ValkeyProps#poolMinIdle()} for pool sizing
-     * </li>
+     *   <li>{@link ValkeyProps#poolMaxTotal()}, {@link ValkeyProps#poolMaxIdle()}, and {@link
+     *       ValkeyProps#poolMinIdle()} for pool sizing
      * </ul>
      *
      * @param p valkey connection and pooling options

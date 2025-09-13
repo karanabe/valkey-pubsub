@@ -13,8 +13,8 @@ import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.exceptions.JedisException;
 
 /**
- * Jedis-based implementation of {@link MessagePublisher} that publishes messages to
- * Valkey using a {@link JedisPool}.
+ * Jedis-based implementation of {@link MessagePublisher} that publishes messages to Valkey using a
+ * {@link JedisPool}.
  */
 public final class JedisMessagePublisher implements MessagePublisher {
     private static final Logger log = LoggerFactory.getLogger(JedisMessagePublisher.class);

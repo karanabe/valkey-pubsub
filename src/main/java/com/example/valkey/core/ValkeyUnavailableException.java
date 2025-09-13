@@ -1,8 +1,6 @@
 package com.example.valkey.core;
 
-/**
- * Indicates that the Valkey server cannot be reached or is otherwise unavailable.
- */
+/** Indicates that the Valkey server cannot be reached or is otherwise unavailable. */
 public class ValkeyUnavailableException extends RuntimeException {
     /**
      * Creates a new exception with the specified detail message and cause.

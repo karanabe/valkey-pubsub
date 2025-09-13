@@ -1,14 +1,12 @@
 package com.example.valkey.core;
 
 /**
- * Provides asynchronous subscriptions to channels.
- * Implementations deliver messages to registered handlers without blocking the caller.
+ * Provides asynchronous subscriptions to channels. Implementations deliver messages to registered
+ * handlers without blocking the caller.
  */
 public interface MessageSubscriber {
 
-    /**
-     * Callback invoked whenever a subscribed channel receives a message.
-     */
+    /** Callback invoked whenever a subscribed channel receives a message. */
     @FunctionalInterface
     interface Handler {
         /**
@@ -29,13 +27,9 @@ public interface MessageSubscriber {
      */
     SubscriptionHandle subscribe(String channel, Handler handler);
 
-    /**
-     * Handle used to manage an active subscription.
-     */
+    /** Handle used to manage an active subscription. */
     interface SubscriptionHandle extends AutoCloseable {
-        /**
-         * Cancel the subscription and release any underlying resources.
-         */
+        /** Cancel the subscription and release any underlying resources. */
         @Override
         void close();
     }

@@ -10,13 +10,21 @@ final class ExceptionReporter {
         String place;
         if (trace != null && trace.length > 0) {
             StackTraceElement e = trace[0];
-            place = e.getClassName() + "." + e.getMethodName() +
-                    "(" + e.getFileName() + ":" + e.getLineNumber() + ")";
+            place =
+                    e.getClassName()
+                            + "."
+                            + e.getMethodName()
+                            + "("
+                            + e.getFileName()
+                            + ":"
+                            + e.getLineNumber()
+                            + ")";
         } else {
             place = "unknown";
         }
-        String message = root.getClass().getSimpleName() +
-                (root.getMessage() != null ? ": " + root.getMessage() : "");
+        String message =
+                root.getClass().getSimpleName()
+                        + (root.getMessage() != null ? ": " + root.getMessage() : "");
         System.err.println(message + " at " + place);
     }
 

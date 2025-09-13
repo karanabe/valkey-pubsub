@@ -12,8 +12,8 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
 /**
- * {@link MessageSubscriber} implementation that uses a dedicated Jedis connection
- * to subscribe to a channel and dispatch messages to a handler.
+ * {@link MessageSubscriber} implementation that uses a dedicated Jedis connection to subscribe to a
+ * channel and dispatch messages to a handler.
  */
 public final class JedisMessageSubscriber implements MessageSubscriber {
     private static final Logger log = LoggerFactory.getLogger(JedisMessageSubscriber.class);
@@ -29,8 +29,8 @@ public final class JedisMessageSubscriber implements MessageSubscriber {
     }
 
     /**
-     * Subscribe to the given channel asynchronously. A dedicated daemon thread
-     * listens for messages and invokes the supplied handler.
+     * Subscribe to the given channel asynchronously. A dedicated daemon thread listens for messages
+     * and invokes the supplied handler.
      *
      * @param channel channel name to subscribe to
      * @param handler callback invoked for each received message
