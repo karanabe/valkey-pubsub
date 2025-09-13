@@ -1,11 +1,11 @@
-package com.example.redis.cli;
+package com.example.valkey.cli;
 
-import com.example.redis.core.MessagePublisher;
-import com.example.redis.core.MessageSubscriber;
-import com.example.redis.jedis.JedisMessagePublisher;
-import com.example.redis.jedis.JedisMessageSubscriber;
-import com.example.redis.jedis.JedisPools;
-import com.example.redis.jedis.RedisProps;
+import com.example.valkey.core.MessagePublisher;
+import com.example.valkey.core.MessageSubscriber;
+import com.example.valkey.jedis.JedisMessagePublisher;
+import com.example.valkey.jedis.JedisMessageSubscriber;
+import com.example.valkey.jedis.JedisPools;
+import com.example.valkey.jedis.ValkeyProps;
 import info.picocli.CommandLine;
 import info.picocli.CommandLine.*;
 import java.util.UUID;
@@ -14,17 +14,17 @@ import org.slf4j.MDC;
 import redis.clients.jedis.JedisPool;
 
 @Command(
-    name = "redis-cli",
-    version = "redis-pubsub 0.1.0",
+    name = "valkey-cli",
+    version = "valkey-pubsub 0.1.0",
     mixinStandardHelpOptions = true,
-    subcommands = {RedisCli.Publish.class, RedisCli.Subscribe.class})
-public final class RedisCli implements Runnable {
+    subcommands = {ValkeyCli.Publish.class, ValkeyCli.Subscribe.class})
+  public final class ValkeyCli implements Runnable {
 
   @Option(names = "--trace-id", description = "trace id for logs (default: random uuid)")
   String traceId;
 
   public static void main(String[] args) {
-    int exit = new CommandLine(new RedisCli()).execute(args);
+      int exit = new CommandLine(new ValkeyCli()).execute(args);
     System.exit(exit);
   }
 
@@ -33,8 +33,8 @@ public final class RedisCli implements Runnable {
     // ルートで何もしない（help表示は picocli が対応）
   }
 
-  static RedisProps buildProps(Common c) {
-    return new RedisProps(
+    static ValkeyProps buildProps(Common c) {
+      return new ValkeyProps(
         c.host, c.port, c.ssl, c.username, c.password, c.database, c.timeoutMillis,
         c.poolMaxTotal, c.poolMaxIdle, c.poolMinIdle);
   }
@@ -53,15 +53,15 @@ public final class RedisCli implements Runnable {
   }
 
   @Command(name = "publish", description = "Publish a message to a channel")
-  static final class Publish extends Common implements Callable<Integer> {
-    @ParentCommand RedisCli parent;
+    static final class Publish extends Common implements Callable<Integer> {
+      @ParentCommand ValkeyCli parent;
 
     @Parameters(index = "0", paramLabel = "CHANNEL") String channel;
     @Parameters(index = "1", paramLabel = "MESSAGE") String message;
 
     @Override
     public Integer call() {
-      String tid = parent.traceId != null ? parent.traceId : UUID.randomUUID().toString();
+        String tid = parent.traceId != null ? parent.traceId : UUID.randomUUID().toString();
       MDC.put("traceId", tid);
       try (JedisPool pool = JedisPools.create(buildProps(this))) {
         MessagePublisher pub = new JedisMessagePublisher(pool);
@@ -78,8 +78,8 @@ public final class RedisCli implements Runnable {
   }
 
   @Command(name = "subscribe", description = "Subscribe and print messages")
-  static final class Subscribe extends Common implements Callable<Integer> {
-    @ParentCommand RedisCli parent;
+    static final class Subscribe extends Common implements Callable<Integer> {
+      @ParentCommand ValkeyCli parent;
 
     @Parameters(index = "0", paramLabel = "CHANNEL") String channel;
 

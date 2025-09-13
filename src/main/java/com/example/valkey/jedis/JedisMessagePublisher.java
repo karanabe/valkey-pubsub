@@ -1,8 +1,8 @@
-package com.example.redis.jedis;
+package com.example.valkey.jedis;
 
-import com.example.redis.core.MessagePublisher;
-import com.example.redis.core.PublishException;
-import com.example.redis.core.RedisUnavailableException;
+import com.example.valkey.core.MessagePublisher;
+import com.example.valkey.core.PublishException;
+import com.example.valkey.core.ValkeyUnavailableException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -30,8 +30,8 @@ public final class JedisMessagePublisher implements MessagePublisher {
       }
       return n;
     } catch (JedisExhaustedPoolException | JedisConnectionException e) {
-      log.error("redis unavailable on publish to '{}': {}", channel, e.toString());
-      throw new RedisUnavailableException("redis unavailable", e);
+        log.error("valkey unavailable on publish to '{}': {}", channel, e.toString());
+        throw new ValkeyUnavailableException("valkey unavailable", e);
     } catch (JedisDataException e) {
       log.error("publish data error on '{}'", channel, e);
       throw new PublishException("publish data error", e);

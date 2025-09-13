@@ -1,7 +1,8 @@
 // jedis/JedisMessageSubscriber.java
-package com.example.redis.jedis;
+package com.example.valkey.jedis;
 
-import com.example.redis.core.MessageSubscriber;
+import com.example.valkey.core.MessageSubscriber;
+import com.example.valkey.jedis.ValkeyProps;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
@@ -11,11 +12,13 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
-public final class JedisMessageSubscriber implements MessageSubscriber {
-  private static final Logger log = LoggerFactory.getLogger(JedisMessageSubscriber.class);
-  private final RedisProps props;
+  public final class JedisMessageSubscriber implements MessageSubscriber {
+    private static final Logger log = LoggerFactory.getLogger(JedisMessageSubscriber.class);
+    private final ValkeyProps props;
 
-  public JedisMessageSubscriber(RedisProps props) { this.props = Objects.requireNonNull(props); }
+    public JedisMessageSubscriber(ValkeyProps props) {
+      this.props = Objects.requireNonNull(props);
+    }
 
   @Override
   public SubscriptionHandle subscribe(String channel, Handler handler) {
@@ -54,8 +57,8 @@ public final class JedisMessageSubscriber implements MessageSubscriber {
               } finally {
                 log.info("subscribe end channel='{}'", channel);
               }
-            },
-            "redis-sub-" + channel);
+              },
+              "valkey-sub-" + channel);
 
     t.setDaemon(true);
     t.start();
