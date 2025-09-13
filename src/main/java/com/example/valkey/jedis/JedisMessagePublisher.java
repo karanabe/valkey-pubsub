@@ -10,7 +10,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
-import redis.clients.jedis.exceptions.JedisExhaustedPoolException;
+import redis.clients.jedis.exceptions.JedisException;
 
 public final class JedisMessagePublisher implements MessagePublisher {
   private static final Logger log = LoggerFactory.getLogger(JedisMessagePublisher.class);
@@ -29,12 +29,15 @@ public final class JedisMessagePublisher implements MessagePublisher {
         log.info("published to '{}' receivers={}", channel, n);
       }
       return n;
-    } catch (JedisExhaustedPoolException | JedisConnectionException e) {
+    } catch (JedisConnectionException e) {
         log.error("valkey unavailable on publish to '{}': {}", channel, e.toString());
         throw new ValkeyUnavailableException("valkey unavailable", e);
     } catch (JedisDataException e) {
       log.error("publish data error on '{}'", channel, e);
       throw new PublishException("publish data error", e);
+    } catch (JedisException e) {
+      log.error("publish data error on '{}'", channel, e);
+      throw new PublishException("jedis exception", e);
     } catch (Exception e) {
       log.error("publish failed on '{}'", channel, e);
       throw new PublishException("publish failed", e);
